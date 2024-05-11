@@ -2,8 +2,9 @@
 
 :root {
   --background-color: #FFFFFF;
-  --font-size-xl: 20px;
-  --font-size-ls: 18px;
+  --font-size-xl: 36px;
+  --font-size-lm: 24px;
+  --font-size-ls: 20px;
   --font-size-md: 16px;
   --font-size-sm: 14px;
   --font-size-xs: 12px;
