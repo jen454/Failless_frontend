@@ -79,13 +79,9 @@ const MainPage = () => {
       setActiveTab(text);
     }
 
-    const onClickArticleWrite = () => {
-      alert("아티클 작성 페이지 이동");
-    }
-
-    const onClickCommunityWrite = () => {
-      alert("커뮤니티 작성 페이지 이동");
-    }
+    const onClickWriteButton = () => {
+      navigate(`/write?tab=${activeTab}`);
+    } 
 
     return (
       <Container>
@@ -101,16 +97,12 @@ const MainPage = () => {
           </TitleArea>
           <Tab activeTab={activeTab} onClick={onClickTab} setActiveTab={setActiveTab} />
           <WriteArea>
-            {activeTab === '아티클'
-              ? <WriteButton text='아티클 작성' onClick={onClickArticleWrite} />
-              : <WriteButton text='커뮤니티 글 작성' onClick={onClickCommunityWrite} />
-            }
+            {activeTab === '아티클' && <WriteButton text='아티클 작성' onClick={onClickWriteButton} />}
+            {activeTab === '커뮤니티' && <WriteButton text='커뮤니티 글 작성' onClick={onClickWriteButton} />}
           </WriteArea>
           <PostContent>
-            {activeTab === '아티클' 
-              ? <PostList activeTab='아티클' DataList={ArticleDataList} /> 
-              : <PostList activeTab='커뮤니티' DataList={CommunityDataList} />
-            }
+            {activeTab === '아티클' && <PostList activeTab='아티클' DataList={ArticleDataList} />}
+            {activeTab === '커뮤니티' && <PostList activeTab='커뮤니티' DataList={CommunityDataList} />}
           </PostContent>
         </ContentArea>
         <Footer />
