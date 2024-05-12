@@ -64,6 +64,7 @@ const CommunityDataList = [
 const MainPage = () => {
     const [isLog, setIsLog] = useState(false);
     const [activeTab, setActiveTab] = useState('아티클');
+    const [isManager, setIsMagneger] = useState(false);
     const navigate = useNavigate();
 
     const onClickLogInButton = () => {
@@ -88,7 +89,11 @@ const MainPage = () => {
 
     return (
       <Container>
-        <Header isLog={isLog} onClick={onClickLogInButton}/>
+        <Header
+          isLog={isLog}
+          onClickLogInButton={onClickLogInButton}
+          onClickNoticeLogo={onClickNoticeLogo}
+        />
         <ContentArea>
           <TitleArea>
             <Logo src={logo} />
