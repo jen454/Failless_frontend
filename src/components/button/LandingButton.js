@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 
-function LandingButton({ text, onClick }) {
+const LandingButton = ({ text, onClick }) => {
   return (
     <Container onClick={onClick}>
       <Text>{text}</Text>
