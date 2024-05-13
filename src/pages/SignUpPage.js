@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Input from '../components/Input';
 import LandingButton from '../components/button/LandingButton';
 import content_logo from '../assets/logo.svg';
+import { signup } from '../server/service/member';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -22,8 +23,16 @@ const SignUpPage = () => {
     setPassword(e.target.value);
   };
 
-  const onClickButton = () => {
-    alert("회원가입 버튼 누름!");
+  const onClickButton = async () => {
+    try {
+      const response = await signup(nickname, id, password);
+      // 회원가입 성공 처리
+      navigate('/signin'); // 회원가입 후 로그인 페이지로 이동
+    } catch (error) {
+      // 회원가입 실패 처리
+      console.error('회원가입 실패:', error);
+      alert('회원가입에 실패했습니다.');
+    }
   }
   
   
@@ -34,7 +43,7 @@ const SignUpPage = () => {
       <LogArea>
         <InputArea>
           <Text>닉네임</Text>
-          <Input onChange={onChangeId} value={id} placeholder={"닉네임을 입력 해주세요."} />
+          <Input onChange={onChangeNickname} value={id} placeholder={"닉네임을 입력 해주세요."} />
         </InputArea>
         <InputArea>
           <Text>아이디</Text>

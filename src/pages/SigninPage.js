@@ -1,5 +1,9 @@
 import { React, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { signin } from '../server/service/member';
+import { useCookies } from 'react-cookie';
+import { useRecoilState } from 'recoil';
+import userState from '../recoil/userState';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import LandingButton from '../components/button/LandingButton';
@@ -7,8 +11,11 @@ import logo from '../assets/logo.svg';
 
 const SigninPage = () => {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const [user, setUser] = useRecoilState(userState);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  
 
   const onChangeId = e => {
     setId(e.target.value);
@@ -18,9 +25,20 @@ const SigninPage = () => {
     setPassword(e.target.value);
   };
 
-  const onClickButton = () => {
-    alert("로그인 버튼 누름!");
-  }
+  const onClickButton = async () => {
+    try {
+      const response = await signin(id, password);
+      // 로그인 성공 처리
+      setCookie('token', response.data.token);
+      const { userInfo } = response.data;
+      setUser(userInfo);
+      navigate('/'); // 로그인 후 이동할 페이지로 설정
+    } catch (error) {
+      // 로그인 실패 처리
+      console.error('로그인 실패:', error);
+      alert('로그인에 실패했습니다.');
+    }
+  };
 
   const onClickSignUp = () => {
     navigate('/signup');
