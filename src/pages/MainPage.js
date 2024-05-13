@@ -48,12 +48,14 @@ const ArticleDataList = [
 
 const CommunityDataList = [
   {
+    id: "1",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
     nickname: "매니저"
   },
   {
+    id: "2",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",

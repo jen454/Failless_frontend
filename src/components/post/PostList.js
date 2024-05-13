@@ -6,9 +6,8 @@ import PostItem from './PostItem';
 // 전체 포스트 아이템 리스트 컴포넌트
 const PostList = ({ activeTab, DataList }) => {
   const navigate = useNavigate();
-  const onClickPostList = () => {
-    // navigate(`/post/post-detail/${postid}`);
-    alert("post 클릭!");
+  const onClickPostList = (postId) => {
+    navigate(`/post-detail/${postId}?tab=${activeTab}`);
   };
   return (
     <Container>
@@ -19,7 +18,7 @@ const PostList = ({ activeTab, DataList }) => {
             tab={activeTab}
             post={data}
             onClick={() => {
-              return onClickPostList();
+              return onClickPostList(data.id);
             }}
           />
         );

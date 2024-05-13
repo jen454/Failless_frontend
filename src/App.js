@@ -4,6 +4,7 @@ import MainPage from './pages/MainPage';
 import SignInPage from './pages/SigninPage';
 import SignUpPage from './pages/SignUpPage';
 import WritePage from './pages/WritePage';
+import PostDetailPage from './pages/PostDetailPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/signin" element={<SignInPage/>} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/write" element={<WritePage />} />
+            <Route path="/post-detail/:postId" element={<PostDetailPage />} />
           </Routes>
         </BrowserRouter>
     </div>
