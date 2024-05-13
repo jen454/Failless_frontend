@@ -55,7 +55,7 @@ const SigninPage = () => {
         </InputArea>
         <InputArea>
           <Text>비밀번호</Text>
-          <Input onChange={onChangePassWord} value={password} placeholder={"비밀번호를 입력 해주세요."}/>
+          <Input type="password" onChange={onChangePassWord} value={password} placeholder={"비밀번호를 입력 해주세요."}/>
         </InputArea>
         <LandingButton text={"로그인하기"} onClick={onClickButton} />
         <LinkArea>

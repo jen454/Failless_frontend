@@ -8,7 +8,6 @@ const userState = atom({
   default: {
     _id: '',
     id: '',
-    password: '',
     nickname: '',
   },
   effects_UNSTABLE: [persistAtom],
