@@ -9,6 +9,7 @@ const userState = atom({
     _id: '',
     id: '',
     nickname: '',
+    isManager: '',
   },
   effects_UNSTABLE: [persistAtom],
 });
