@@ -44,7 +44,10 @@ const PostDetailPage = () => {
           <InfoText>{data.date} | {data.nickname}</InfoText>
         </TitleArea>
         <ContentArea>
-            1
+            <ContentTextarea
+              value={data.content}
+              readOnly
+            />
         </ContentArea>
       </WrapperArea>
       <Footer />
@@ -95,6 +98,18 @@ const InfoText = styled.div`
   font-size: var(--font-size-md);
   color: #6D6D6D;
   margin-top: 6px;
+`;
+
+const ContentTextarea = styled.textarea`
+  width: 100wh;
+  height: auto;
+  min-height: 450px; /* 최소 높이 설정 */
+  padding: 0px 40px;
+  font-size: 18px;
+  color: var(--color-gray-500);
+  border: none;
+  outline: none;
+  resize: none;
 `;
 
 export default PostDetailPage;
