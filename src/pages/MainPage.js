@@ -69,6 +69,10 @@ const MainPage = () => {
     const [isManager, setIsMagneger] = useState(false);
     const navigate = useNavigate();
 
+    const onClickLogo = () => {
+      navigate("/");
+    }
+
     const onClickLogInButton = () => {
       navigate("/signin");
     };
@@ -89,6 +93,7 @@ const MainPage = () => {
       <Container>
         <Header
           isLog={isLog}
+          onClickLogo={onClickLogo}
           onClickLogInButton={onClickLogInButton}
           onClickNoticeLogo={onClickNoticeLogo}
         />

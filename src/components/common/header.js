@@ -5,11 +5,11 @@ import login from '../../assets/login.svg';
 import logout from '../../assets/logout.svg';
 import alertLogo from "../../assets/noticeLogo.svg";
 
-const header = ({ isLog, onClickLogInButton, onClickNoticeLogo }) => {
+const header = ({ isLog, onClickLogo, onClickLogInButton, onClickNoticeLogo }) => {
   return (
     <Container>
       <HeaderArea>
-        <Logo src={logo} />
+        <Logo src={logo} onClick={onClickLogo}/>
         <UserArea>
           {isLog === false
             ? <IsLogin src={login} onClick={onClickLogInButton} />

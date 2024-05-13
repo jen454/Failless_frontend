@@ -22,6 +22,10 @@ const PostDetailPage = () => {
   const tab = searchParams.get('tab');
   const data = CommunityDataList;
 
+  const onClickLogo = () => {
+    navigate("/");
+  }
+
   const onClickLogOutButton = () => {
     navigate("/");
   };
@@ -34,6 +38,7 @@ const PostDetailPage = () => {
     <Container>
       <Header
         isLog={isLog}
+        onClickLogo={onClickLogo}
         onClickLogInButton={onClickLogOutButton}
         onClickNoticeLogo={onClickNoticeLogo}
       />

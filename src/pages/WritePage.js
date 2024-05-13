@@ -15,6 +15,10 @@ const WritePage = () => {
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
 
+  const onClickLogo = () => {
+    navigate("/");
+  }
+  
   const onClickLogOutButton = () => {
     navigate("/");
   };
@@ -39,6 +43,7 @@ const WritePage = () => {
     <Container>
       <Header
         isLog={isLog}
+        onClickLogo={onClickLogo}
         onClickLogInButton={onClickLogOutButton}
         onClickNoticeLogo={onClickNoticeLogo}
       />
