@@ -1,8 +1,13 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { getArticle } from '../server/service/article';
+import { getPost } from "../server/service/community";
+import userState from '../recoil/userState';
 import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
+import contactLogo from '../assets/contactLogo.svg';
 
 const CommunityDataList = 
     {
@@ -14,32 +19,69 @@ const CommunityDataList =
     };
 
 const PostDetailPage = () => {
-  const [isLog, setIsLog] = useState(true);
+  const userData = useRecoilValue(userState);
+  const setUser = useSetRecoilState(userState);
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const { postId } = useParams();
   const tab = searchParams.get('tab');
   const data = CommunityDataList;
+  const [ddata, setDdata] = useState([]);
 
   const onClickLogo = () => {
     navigate("/");
   }
 
+  const onClickLogInButton = () => {
+    navigate("/signin");
+  };
+
   const onClickLogOutButton = () => {
-    navigate("/");
+    setUser({ writerId: '', isManager: false });
+    navigate('/'); 
   };
 
   const onClickNoticeLogo = () => {
-    alert("알림 로고 클릭");
+    if (!userData.writerId) {
+      alert("로그인을 해주세요");
+      return;
+    }
+  };
+
+  useEffect(() => {
+    if (tab === '아티클') {
+      getArticleData();
+    } else {
+      getCommunityData();
+    }
+  }, []);
+
+  const getArticleData = async (postId) => {
+    try {
+      const response = await getArticle(postId);
+      setDdata(response.data);
+    } catch (error) {
+      console.error('아티클 데이터 가져오기 실패:', error);
+    }
+  };
+
+  const getCommunityData = async (postId) => {
+    try {
+      const response = await getPost(postId);
+      setDdata(response.data);
+    } catch (error) {
+      console.error('커뮤니티 데이터 가져오기 실패:', error);
+    }
   };
 
   return (
     <Container>
       <Header
-        isLog={isLog}
+        isLog={!!userData.writerId}
         onClickLogo={onClickLogo}
-        onClickLogInButton={onClickLogOutButton}
+        onClickLogInButton={onClickLogInButton}
+        onClickLogOutButton={onClickLogOutButton}
         onClickNoticeLogo={onClickNoticeLogo}
       />
       <WrapperArea>
@@ -54,6 +96,7 @@ const PostDetailPage = () => {
               readOnly
             />
         </ContentArea>
+        <ContactLogo src={contactLogo} />
       </WrapperArea>
       <Footer />
     </Container>
@@ -115,6 +158,14 @@ const ContentTextarea = styled.textarea`
   border: none;
   outline: none;
   resize: none;
+`;
+
+const ContactLogo = styled.img`
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  right: 40px;
+  bottom: 280px;
 `;
 
 export default PostDetailPage;
