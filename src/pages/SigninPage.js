@@ -1,7 +1,6 @@
-import { React, useState } from 'react'
+import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signin } from '../server/service/member';
-import { useCookies } from 'react-cookie';
 import { useRecoilState } from 'recoil';
 import userState from '../recoil/userState';
 import styled from 'styled-components';
@@ -11,12 +10,10 @@ import logo from '../assets/logo.svg';
 
 const SigninPage = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const [user, setUser] = useRecoilState(userState);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   
-
   const onChangeId = e => {
     setId(e.target.value);
   };
@@ -29,7 +26,6 @@ const SigninPage = () => {
     try {
       const response = await signin(id, password);
       // 로그인 성공 처리
-      setCookie('token', response.data.token);
       const { userInfo } = response.data;
       setUser(userInfo);
       navigate('/'); // 로그인 후 이동할 페이지로 설정
