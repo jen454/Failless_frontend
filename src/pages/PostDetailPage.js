@@ -10,7 +10,7 @@ const CommunityDataList =
       date: "2024.05.10",
       title: "OOAD",
       content: "객지분 프로젝트",
-      nickname: "매니저"
+      writerId: "manager@naver.com"
     };
 
 const PostDetailPage = () => {
@@ -46,7 +46,7 @@ const PostDetailPage = () => {
         <TitleArea>
           <TabText>{tab}</TabText>
           <TitleText>{data.title}</TitleText>
-          <InfoText>{data.date} | {data.nickname}</InfoText>
+          <InfoText>{data.date} | {data.writerId}</InfoText>
         </TitleArea>
         <ContentArea>
             <ContentTextarea

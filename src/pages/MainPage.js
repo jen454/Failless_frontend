@@ -14,35 +14,35 @@ const ArticleDataList = [
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
   {
     id: "2",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
   {
     id: "3",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
   {
     id: "4",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
   {
     id: "5",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
 ];
 
@@ -52,14 +52,14 @@ const CommunityDataList = [
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
   {
     id: "2",
     date: "2024.05.10",
     title: "OOAD",
     content: "객지분 프로젝트",
-    nickname: "매니저"
+    writerId: "manager@naver.com"
   },
 ];
 

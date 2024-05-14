@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import MainPage from './pages/MainPage';
 import SignInPage from './pages/SigninPage';
 import SignUpPage from './pages/SignUpPage';
@@ -10,6 +11,7 @@ function App() {
   return (
     <div className="App">
         <BrowserRouter>
+          <RecoilRoot>
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/signin" element={<SignInPage/>} />
@@ -17,6 +19,7 @@ function App() {
             <Route path="/write" element={<WritePage />} />
             <Route path="/post-detail/:postId" element={<PostDetailPage />} />
           </Routes>
+          </RecoilRoot>
         </BrowserRouter>
     </div>
   );

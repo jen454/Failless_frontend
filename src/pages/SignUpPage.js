@@ -8,13 +8,9 @@ import { signup } from '../server/service/member';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState('');
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  const onChangeNickname = e => {
-    setNickname(e.target.value);
-  }
   const onChangeId = e => {
     setId(e.target.value);
   };
@@ -25,7 +21,7 @@ const SignUpPage = () => {
 
   const onClickButton = async () => {
     try {
-      const response = await signup(nickname, id, password);
+      const response = await signup(id, password);
       // 회원가입 성공 처리
       navigate('/signin'); // 회원가입 후 로그인 페이지로 이동
     } catch (error) {
@@ -41,10 +37,6 @@ const SignUpPage = () => {
       <Logo src={content_logo} />
       <Title>국내 스타트업 대표와 예비 대표들을 위한 칼럼 및 커뮤니티</Title>
       <LogArea>
-        <InputArea>
-          <Text>닉네임</Text>
-          <Input onChange={onChangeNickname} value={id} placeholder={"닉네임을 입력 해주세요."} />
-        </InputArea>
         <InputArea>
           <Text>아이디</Text>
           <Input onChange={onChangeId} value={id} placeholder={"이메일을 입력 해주세요."} />
