@@ -1,5 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { getAllArticle } from '../server/service/article';
+import { getAllPosts } from "../server/service/community";
+import userState from '../recoil/userState';
 import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
@@ -64,37 +68,78 @@ const CommunityDataList = [
 ];
 
 const MainPage = () => {
-    const [isLog, setIsLog] = useState(false);
     const [activeTab, setActiveTab] = useState('아티클');
-    const [isManager, setIsMagneger] = useState(false);
+    const userData = useRecoilValue(userState);
+    const setUser = useSetRecoilState(userState);
     const navigate = useNavigate();
+    const [articleData, setArticleData] = useState([]);
+    const [communityData, setCommunityData] = useState([]);
 
     const onClickLogo = () => {
       navigate("/");
-    }
+    };
 
     const onClickLogInButton = () => {
       navigate("/signin");
     };
+
+    const onClickLogOutButton = () => {
+      setUser({ writerId: '', isManager: false });
+      navigate('/'); 
+    };
     
     const onClickNoticeLogo = () => {
-      alert("알림 로고 클릭");
+      if (!userData.writerId) {
+        alert("로그인을 해주세요");
+        return;
+      }
     };
 
     const onClickTab = (text) => {
       setActiveTab(text);
-    }
+    };
 
     const onClickWriteButton = () => {
+      if (!userData.writerId) {
+        alert("로그인을 해주세요");
+        return;
+      }
       navigate(`/write?tab=${activeTab}`);
-    } 
+    };
+
+    useEffect(() => {
+      if (activeTab === '아티클') {
+        getAllArticleData();
+      } else {
+        getAllCommunityData();
+      }
+    }, [activeTab]);
+
+    const getAllArticleData = async () => {
+      try {
+        const response = await getAllArticle();
+        setArticleData(response.data);
+      } catch (error) {
+        console.error('아티클 데이터 가져오기 실패:', error);
+      }
+    };
+
+    const getAllCommunityData = async () => {
+      try {
+        const response = await getAllPosts();
+        setCommunityData(response.data);
+      } catch (error) {
+        console.error('커뮤니티 데이터 가져오기 실패:', error);
+      }
+    };
 
     return (
       <Container>
         <Header
-          isLog={isLog}
+          isLog={!!userData.writerId}
           onClickLogo={onClickLogo}
           onClickLogInButton={onClickLogInButton}
+          onClickLogOutButton={onClickLogOutButton}
           onClickNoticeLogo={onClickNoticeLogo}
         />
         <ContentArea>
@@ -104,7 +149,7 @@ const MainPage = () => {
           </TitleArea>
           <Tab activeTab={activeTab} onClick={onClickTab} setActiveTab={setActiveTab} />
           <WriteArea>
-            {activeTab === '아티클' && <WriteButton text='아티클 작성' onClick={onClickWriteButton} />}
+            {activeTab === '아티클' && !!userData.isManager && <WriteButton text='아티클 작성' onClick={onClickWriteButton} />}
             {activeTab === '커뮤니티' && <WriteButton text='커뮤니티 글 작성' onClick={onClickWriteButton} />}
           </WriteArea>
           <PostContent>

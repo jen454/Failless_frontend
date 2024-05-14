@@ -6,8 +6,8 @@ const { persistAtom } = recoilPersist();
 const userState = atom({
   key: 'userState',
   default: {
-    writerId: 'manager@naver.com',
-    isManager: true,
+    writerId: '',
+    isManager: false,
   },
   effects_UNSTABLE: [persistAtom],
 });
