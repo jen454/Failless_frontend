@@ -5,7 +5,7 @@ import login from '../../assets/login.svg';
 import logout from '../../assets/logout.svg';
 import alertLogo from "../../assets/noticeLogo.svg";
 
-const header = ({ isLog, onClickLogo, onClickLogInButton, onClickNoticeLogo }) => {
+const header = ({ isLog, onClickLogo, onClickLogInButton, onClickLogOutButton, onClickNoticeLogo }) => {
   return (
     <Container>
       <HeaderArea>
@@ -13,8 +13,8 @@ const header = ({ isLog, onClickLogo, onClickLogInButton, onClickNoticeLogo }) =
         <UserArea>
           {isLog === false
             ? <IsLogin src={login} onClick={onClickLogInButton} />
-            : <IsLogin src={logout} 
-          />}
+            : <IsLogin src={logout} onClick={onClickLogOutButton} />
+          }
           <Notice src={alertLogo} onClick={onClickNoticeLogo} />
         </UserArea>
       </HeaderArea>
