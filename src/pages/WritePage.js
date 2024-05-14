@@ -1,15 +1,20 @@
-import { React, useState } from 'react';
+import { React, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { writeArticle } from '../server/service/article';
+import { writePost } from "../server/service/community";
+import { getCurrentDate } from "../util/getCurrentDate";
+import userState from '../recoil/userState';
 import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
 import SubmitButton from '../components/button/SubmitButton';
 
 const WritePage = () => {
-  const [isLog, setIsLog] = useState(true);
+  const userData = useRecoilValue(userState);
+  const setUser = useSetRecoilState(userState);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -17,10 +22,11 @@ const WritePage = () => {
 
   const onClickLogo = () => {
     navigate("/");
-  }
+  };
   
   const onClickLogOutButton = () => {
-    navigate("/");
+    setUser({ writerId: '', isManager: false });
+    navigate('/'); 
   };
   
   const onClickNoticeLogo = () => {
@@ -36,15 +42,54 @@ const WritePage = () => {
   };
 
   const onClickSubmitButton = () => {
+    if (tab === '아티클') {
+      writeArticlePost();
+    } else if (tab === '커뮤니티') {
+      writeCommunityPost();
+    }
     navigate("/");
-  }
+  };
+
+  const writeArticlePost = async () => {
+    try {
+      const currentDate = getCurrentDate();
+      const data = {
+        date: currentDate,
+        title: title,
+        content: content,
+        writerId: userData.writerId
+      };
+      const response = await writeArticle(data);
+      console.log('아티클 작성 성공:', response);
+      navigate("/");
+    } catch (error) {
+      console.error('아티클 작성 실패:', error);
+    }
+  };
+
+  const writeCommunityPost = async () => {
+    try {
+      const currentDate = getCurrentDate();
+      const data = {
+        date: currentDate,
+        title: title,
+        content: content,
+        writerId: userData.writerId
+      };
+      const response = await writePost(data);
+      console.log('커뮤니티 게시글 작성 성공:', response);
+      navigate("/");
+    } catch (error) {
+      console.error('커뮤니티 게시글 작성 실패:', error);
+    }
+  };
 
   return (
     <Container>
       <Header
-        isLog={isLog}
+        isLog={!!userData.writerId}
         onClickLogo={onClickLogo}
-        onClickLogInButton={onClickLogOutButton}
+        onClickLogOutButton={onClickLogOutButton}
         onClickNoticeLogo={onClickNoticeLogo}
       />
       <WrapperArea>
