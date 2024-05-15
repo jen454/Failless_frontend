@@ -10,7 +10,7 @@ const PostList = ({ activeTab, DataList }) => {
   const userData = useRecoilValue(userState);
   const navigate = useNavigate();
   const onClickPostList = (postId) => {
-    if (!userData.writerId) {
+    if (!userData.writerId && activeTab === "커뮤니티") {
       alert("로그인을 해주세요");
       return;
     }
