@@ -11,6 +11,8 @@ import Header from '../components/common/header';
 import Footer from '../components/common/footer';
 import CommentList from '../components/comment/CommentList';
 import contactLogo from '../assets/contactLogo.svg';
+import Modal from '../components/contact/Modal';
+import NotificationModal from '../components/contact/NotificationModal';
 
 const CommunityDataList = 
     {
@@ -50,6 +52,17 @@ const PostDetailPage = () => {
   const [data, setData] = useState([]);
   const [commentData, setCommentData] = useState([]);
   const [comment, setComment] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsNotiModalOpen(false);
+  };
 
   const onClickLogo = () => {
     navigate("/");
@@ -69,6 +82,7 @@ const PostDetailPage = () => {
       alert("로그인을 해주세요");
       return;
     }
+    setIsNotiModalOpen(true);
   };
 
   const onChangeComment = e => {
@@ -128,7 +142,6 @@ const PostDetailPage = () => {
   useEffect(() => {
     if (tab === '아티클') {
       getArticleData();
-      getAllCommentData(postId);
     } else {
       getCommunityData();
       getAllCommentData(postId);
@@ -164,9 +177,20 @@ const PostDetailPage = () => {
             <CommentList DataList={CommentDataList} />
           </CommentArea>
         }
-        {tab === "커뮤니티" && <ContactLogo src={contactLogo} />}
+        {tab === "커뮤니티" && <ContactLogo src={contactLogo} onClick={openModal} />}
       </WrapperArea>
       <Footer />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        senderId={userData.writerId}
+        receiverId={CommunityDataList.writerId}
+      />
+      <NotificationModal
+        isOpen={isNotiModalOpen}
+        onClose={closeModal}
+        userId={userData.writeId}
+      />
     </Container>
   )
 }
@@ -266,6 +290,7 @@ const ContactLogo = styled.img`
   height: 60px;
   right: 40px;
   bottom: 280px;
+  cursor: pointer;
 `;
 
 export default PostDetailPage;

@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
 import SubmitButton from '../components/button/SubmitButton';
+import NotificationModal from '../components/contact/NotificationModal';
 
 const WritePage = () => {
   const userData = useRecoilValue(userState);
@@ -19,9 +20,14 @@ const WritePage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
+  const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
 
   const onClickLogo = () => {
     navigate("/");
+  };
+
+  const closeModal = () => {
+    setIsNotiModalOpen(false);
   };
   
   const onClickLogOutButton = () => {
@@ -30,7 +36,11 @@ const WritePage = () => {
   };
   
   const onClickNoticeLogo = () => {
-    alert("알림 로고 클릭");
+    if (!userData.writerId) {
+      alert("로그인을 해주세요");
+      return;
+    }
+    setIsNotiModalOpen(true);
   };
 
   const onChangeTitle = (event) => {
@@ -114,6 +124,11 @@ const WritePage = () => {
         </ContentArea>
       </WrapperArea>
       <Footer />
+      <NotificationModal
+        isOpen={isNotiModalOpen}
+        onClose={closeModal}
+        userId={userData.writeId}
+      />
     </Container>
   )
 };

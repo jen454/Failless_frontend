@@ -11,6 +11,7 @@ import Tab from '../components/Tab';
 import PostList from '../components/post/PostList';
 import WriteButton from "../components/button/writeButton";
 import logo from '../assets/logo.svg';
+import NotificationModal from '../components/contact/NotificationModal';
 
 const ArticleDataList = [
   {
@@ -74,6 +75,11 @@ const MainPage = () => {
     const navigate = useNavigate();
     const [articleData, setArticleData] = useState([]);
     const [communityData, setCommunityData] = useState([]);
+    const [isNotiModalOpen, setIsNotiModalOpen] = useState(false);
+
+    const closeModal = () => {
+      setIsNotiModalOpen(false);
+    };
 
     const onClickLogo = () => {
       navigate("/");
@@ -93,6 +99,7 @@ const MainPage = () => {
         alert("로그인을 해주세요");
         return;
       }
+      setIsNotiModalOpen(true);
     };
 
     const onClickTab = (text) => {
@@ -158,6 +165,11 @@ const MainPage = () => {
           </PostContent>
         </ContentArea>
         <Footer />
+        <NotificationModal
+        isOpen={isNotiModalOpen}
+        onClose={closeModal}
+        userId={userData.writeId}
+      />
       </Container>
     );
   };
