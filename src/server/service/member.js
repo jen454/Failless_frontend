@@ -2,11 +2,11 @@ import axios from 'axios';
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
-export const signin = async (id, password) => {
+export const signin = async (id, pw) => {
   try {
     const response = await axios.post(`${API_ENDPOINT}/member/signin`, {
       id,
-      password,
+      pw,
     });
     return response;
   } catch (error) {
@@ -14,12 +14,11 @@ export const signin = async (id, password) => {
   }
 };
 
-export const signup = async ( nickname, id, password ) => {
+export const signup = async (id, pw) => {
   try {
     const response = await axios.post(`${API_ENDPOINT}/member/signup`, {
-      nickname,
       id,
-      password,
+      pw,
     });
     return response;
   } catch (error) {

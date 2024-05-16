@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import PostItem from './PostItem';
-import userState from '../../recoil/userState';
+import { userState } from '../../recoil/userState';
 import styled from 'styled-components';
 
 // 전체 포스트 아이템 리스트 컴포넌트

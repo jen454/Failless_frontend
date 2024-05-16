@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const getAllContacts = async (id) => {
-  const response = await axios.get(`${API_ENDPOINT}/contact/all?received=${id}`);
+  const response = await axios.get(`${API_ENDPOINT}/contact/all?receiverId=${id}`);
   return response;
 };
 

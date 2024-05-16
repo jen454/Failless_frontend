@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Contact } from '../../server/service/contact';
 
-const Modal = ({ isOpen, onClose, senderId, receivedId }) => {
+const Modal = ({ isOpen, onClose, senderId, receiverId }) => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
@@ -10,10 +10,11 @@ const Modal = ({ isOpen, onClose, senderId, receivedId }) => {
     try {
       const data = {
         senderId: senderId,
-        receivedId: receivedId,
+        receiverId: receiverId,
         message: message
       };
-      await Contact(data);
+      const response = await Contact(data);
+      console.log(response);
       alert('메시지가 전송되었습니다.');
       onClose();
     } catch (error) {

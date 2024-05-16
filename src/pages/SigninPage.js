@@ -2,7 +2,7 @@ import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signin } from '../server/service/member';
 import { useRecoilState } from 'recoil';
-import userState from '../recoil/userState';
+import { userStatePersisted } from '../recoil/userState';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import LandingButton from '../components/button/LandingButton';
@@ -10,7 +10,7 @@ import logo from '../assets/logo.svg';
 
 const SigninPage = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useRecoilState(userState);
+  const [user, setUser] = useRecoilState(userStatePersisted);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   
@@ -25,12 +25,12 @@ const SigninPage = () => {
   const onClickButton = async () => {
     try {
       const response = await signin(id, password);
-      // 로그인 성공 처리
-      const { userInfo } = response.data;
-      setUser(userInfo);
-      navigate('/'); // 로그인 후 이동할 페이지로 설정
+      console.log(response);
+      const _id = response.data.id;
+      const manager = response.data.manager;
+      setUser({ writerId: _id, isManager: manager });
+      navigate('/');
     } catch (error) {
-      // 로그인 실패 처리
       console.error('로그인 실패:', error);
       alert('로그인에 실패했습니다.');
     }
@@ -38,8 +38,8 @@ const SigninPage = () => {
 
   const onClickSignUp = () => {
     navigate('/signup');
-  }
-  
+  };
+
   return (
     <Container>
       <Logo src={logo} />
@@ -47,11 +47,11 @@ const SigninPage = () => {
       <LogArea>
         <InputArea>
           <Text>아이디</Text>
-          <Input onChange={onChangeId} value={id} placeholder={"이메일을 입력 해주세요."} />
+          <Input onChange={onChangeId} value={id} placeholder={"아이디를 입력 해주세요."} />
         </InputArea>
         <InputArea>
           <Text>비밀번호</Text>
-          <Input type="password" onChange={onChangePassWord} value={password} placeholder={"비밀번호를 입력 해주세요."}/>
+          <Input type="password" onChange={onChangePassWord} value={password} placeholder={"비밀번호를 입력 해주세요."} />
         </InputArea>
         <LandingButton text={"로그인하기"} onClick={onClickButton} />
         <LinkArea>

@@ -36,8 +36,9 @@ const NotificationModal = ({ isOpen, onClose, userId }) => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const data = await getAllContacts(userId);
-        setContacts(data);
+        const response = await getAllContacts(userId);
+        console.log(response.data);
+        setContacts(response.data);
       } catch (error) {
         console.error('컨택 내용을 불러오는 중 에러 발생:', error);
       }
@@ -57,8 +58,8 @@ const NotificationModal = ({ isOpen, onClose, userId }) => {
               <CloseButton onClick={onClose}>X</CloseButton>
             </ModalHeader>
             <NotificationList>
-              {noticeDataList.map((contact, index) => (
-                <NotificationItem key={index}>
+              {contacts.map(contact => (
+                <NotificationItem>
                   <Sender>"{contact.senderId}"님의 컨택 요청이 왔습니다.</Sender>
                   <Buttons>
                     {/* <CloseButton>X</CloseButton> */}

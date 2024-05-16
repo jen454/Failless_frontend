@@ -5,7 +5,7 @@ import { getArticle } from '../server/service/article';
 import { getPost } from "../server/service/community";
 import { getAllComments } from '../server/service/comment';
 import { writeComment } from '../server/service/comment';
-import userState from '../recoil/userState';
+import { userState } from '../recoil/userState';
 import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
@@ -66,7 +66,7 @@ const PostDetailPage = () => {
 
   const onClickLogo = () => {
     navigate("/");
-  }
+  };
 
   const onClickLogInButton = () => {
     navigate("/signin");
@@ -87,13 +87,13 @@ const PostDetailPage = () => {
 
   const onChangeComment = e => {
     setComment(e.target.value);
-  }
+  };
 
   const onClickConfirmButton = async () => {
     if (!comment.trim()) {
       alert('댓글을 입력해주세요.');
       return;
-    }
+    };
 
     const commentData = {
       content: comment,
@@ -109,7 +109,7 @@ const PostDetailPage = () => {
     } catch (error) {
       console.error('댓글 작성 실패:', error);
       alert('댓글 작성에 실패했습니다.');
-    }
+    };
   };
 
   const getAllCommentData = async (postId) => {
@@ -118,25 +118,25 @@ const PostDetailPage = () => {
       setCommentData(response.data);
     } catch (error) {
       console.error('아티클 데이터 가져오기 실패:', error);
-    }
-  }
+    };
+  };
 
-  const getArticleData = async (postId) => {
+  const getArticleData = async () => {
     try {
       const response = await getArticle(postId);
       setData(response.data);
     } catch (error) {
       console.error('아티클 데이터 가져오기 실패:', error);
-    }
+    };
   };
 
-  const getCommunityData = async (postId) => {
+  const getCommunityData = async () => {
     try {
       const response = await getPost(postId);
       setData(response.data);
     } catch (error) {
       console.error('커뮤니티 데이터 가져오기 실패:', error);
-    }
+    };
   };
 
   useEffect(() => {
@@ -160,12 +160,12 @@ const PostDetailPage = () => {
       <WrapperArea>
         <TitleArea>
           <TabText>{tab}</TabText>
-          <TitleText>{CommunityDataList.title}</TitleText>
-          <InfoText>{CommunityDataList.date} | {CommunityDataList.writerId}</InfoText>
+          <TitleText>{data.title}</TitleText>
+          <InfoText>{data.date} | {data.writerId}</InfoText>
         </TitleArea>
         <ContentArea>
             <ContentTextarea
-              value={CommunityDataList.content}
+              value={data.content}
               readOnly
             />
         </ContentArea>
@@ -174,7 +174,7 @@ const PostDetailPage = () => {
             <CommentTitle>Comment</CommentTitle>
             <CommentInput onChange={onChangeComment} value={comment} placeholder='댓글을 입력해주세요.' />
             <CommentButton onClick={onClickConfirmButton}>확인</CommentButton>
-            <CommentList DataList={CommentDataList} />
+            <CommentList DataList={commentData} />
           </CommentArea>
         }
         {tab === "커뮤니티" && <ContactLogo src={contactLogo} onClick={openModal} />}
@@ -184,12 +184,12 @@ const PostDetailPage = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
         senderId={userData.writerId}
-        receiverId={CommunityDataList.writerId}
+        receiverId={data.writerId}
       />
       <NotificationModal
         isOpen={isNotiModalOpen}
         onClose={closeModal}
-        userId={userData.writeId}
+        userId={userData.writerId}
       />
     </Container>
   )

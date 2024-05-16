@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { writeArticle } from '../server/service/article';
 import { writePost } from "../server/service/community";
 import { getCurrentDate } from "../util/getCurrentDate";
-import userState from '../recoil/userState';
+import { userState } from '../recoil/userState';
 import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
@@ -127,7 +127,7 @@ const WritePage = () => {
       <NotificationModal
         isOpen={isNotiModalOpen}
         onClose={closeModal}
-        userId={userData.writeId}
+        userId={userData.writerId}
       />
     </Container>
   )

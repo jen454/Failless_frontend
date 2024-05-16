@@ -22,6 +22,7 @@ const SignUpPage = () => {
   const onClickButton = async () => {
     try {
       const response = await signup(id, password);
+      console.log(response);
       // 회원가입 성공 처리
       navigate('/signin'); // 회원가입 후 로그인 페이지로 이동
     } catch (error) {
@@ -39,7 +40,7 @@ const SignUpPage = () => {
       <LogArea>
         <InputArea>
           <Text>아이디</Text>
-          <Input onChange={onChangeId} value={id} placeholder={"이메일을 입력 해주세요."} />
+          <Input onChange={onChangeId} value={id} placeholder={"아이디를 입력 해주세요."} />
         </InputArea>
         <InputArea>
           <Text>비밀번호</Text>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { getAllArticle } from '../server/service/article';
 import { getAllPosts } from "../server/service/community";
-import userState from '../recoil/userState';
+import { userState } from '../recoil/userState';
 import styled from 'styled-components';
 import Header from '../components/common/header';
 import Footer from '../components/common/footer';
@@ -124,8 +124,8 @@ const MainPage = () => {
 
     const getAllArticleData = async () => {
       try {
-        const response = await getAllArticle();
-        setArticleData(response.data);
+        const article_response = await getAllArticle();
+        setArticleData(article_response.data);
       } catch (error) {
         console.error('아티클 데이터 가져오기 실패:', error);
       }
@@ -133,8 +133,8 @@ const MainPage = () => {
 
     const getAllCommunityData = async () => {
       try {
-        const response = await getAllPosts();
-        setCommunityData(response.data);
+        const com_response = await getAllPosts();
+        setCommunityData(com_response.data);
       } catch (error) {
         console.error('커뮤니티 데이터 가져오기 실패:', error);
       }
@@ -160,16 +160,16 @@ const MainPage = () => {
             {activeTab === '커뮤니티' && <WriteButton text='커뮤니티 글 작성' onClick={onClickWriteButton} />}
           </WriteArea>
           <PostContent>
-            {activeTab === '아티클' && <PostList activeTab='아티클' DataList={ArticleDataList} />}
-            {activeTab === '커뮤니티' && <PostList activeTab='커뮤니티' DataList={CommunityDataList} />}
+            {activeTab === '아티클' && <PostList activeTab='아티클' DataList={articleData} />}
+            {activeTab === '커뮤니티' && <PostList activeTab='커뮤니티' DataList={communityData} />}
           </PostContent>
         </ContentArea>
         <Footer />
         <NotificationModal
-        isOpen={isNotiModalOpen}
-        onClose={closeModal}
-        userId={userData.writeId}
-      />
+          isOpen={isNotiModalOpen}
+          onClose={closeModal}
+          userId={userData.writerId}
+        />
       </Container>
     );
   };
